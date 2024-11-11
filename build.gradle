@@ -1,0 +1,114 @@
+plugins {
+  id 'java'
+  id 'war'
+  id 'org.gretty' version '4.0.3'
+  id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.jstorybook'
+version = '0.1.0-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  // Spring 6 with Jakarta EE 9+
+  implementation 'org.springframework:spring-webmvc:6.0.11'
+
+  // Jakarta Servlet API
+  providedCompile 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+
+  // Jakarta Standard Tag Library (JSTL)
+  implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0'
+  implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'
+
+  // Logging
+  implementation 'ch.qos.logback:logback-classic:1.4.7'
+  implementation 'org.slf4j:slf4j-api:2.0.7'
+
+  // Testing
+  testImplementation 'junit:junit:4.13.2'
+  testImplementation 'org.mockito:mockito-core:5.3.1'
+}
+
+gretty {
+  contextPath = '/jstorybook'
+  httpsEnabled = false
+  scanInterval = 1
+  inplaceMode = 'hard'
+  jvmArgs = ['-Xmx1024M']
+  servletContainer = 'tomcat10'  // Use Tomcat 10 for Jakarta EE 9+ support
+}
+
+// Custom task to create new component
+// Custom task to create new component
+tasks.register('createComponent') {
+  description 'Creates a new JSP component and its story'
+  doLast {
+    // Get the component name from command line argument, default to 'NewComponent' if not provided
+    def componentName = project.findProperty('component') ?: 'NewComponent'
+    def componentDir = file("src/main/webapp/components")
+    def storiesDir = file("src/main/webapp/WEB-INF/views/stories")
+
+    // Create directories if they don't exist
+    componentDir.mkdirs()
+    storiesDir.mkdirs()
+
+    println "Creating component: ${componentName}"
+
+    // Create component file
+    def componentFile = new File(componentDir, "${componentName}.jsp")
+    componentFile.text = """<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
+<div class="${componentName.toLowerCase()}">
+    <!-- Component content here -->
+    <c:if test="${'${param.content != null}'}">
+        ${'${param.content}'}
+    </c:if>
+</div>
+"""
+    println "Created component file: ${componentFile.absolutePath}"
+
+    // Create story file
+    def storyFile = new File(storiesDir, "${componentName}Story.jsp")
+    storyFile.text = """<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%-- 
+Story: ${componentName}
+Description: Description of the ${componentName}
+Props:
+  - content: string | Main content for the component
+--%>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>${componentName} Story</title>
+    <style>
+        .${componentName.toLowerCase()} {
+            /* Component styles here */
+        }
+    </style>
+</head>
+<body>
+    <h2>${componentName} Examples</h2>
+    
+    <h3>Default</h3>
+    <jsp:include page="/components/${componentName}.jsp">
+        <jsp:param name="content" value="Default Content" />
+    </jsp:include>
+
+    <h3>Custom Content</h3>
+    <jsp:include page="/components/${componentName}.jsp">
+        <jsp:param name="content" value="Custom Content Example" />
+    </jsp:include>
+</body>
+</html>
+"""
+    println "Created story file: ${storyFile.absolutePath}"
+
+    println "Successfully created component ${componentName} and its story"
+  }
+}
