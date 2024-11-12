@@ -1,0 +1,25 @@
+plugins {
+    id 'war'
+    id 'org.gretty' version '4.0.3'
+}
+
+dependencies {
+    // Add dependency on core module
+    implementation project(':jstorybook-core')
+
+    // Servlet API
+    providedCompile 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+
+    // JSTL dependencies (needed for JSP compilation)
+    implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0'
+    implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'
+}
+
+gretty {
+    contextPath = '/jstorybook'
+    httpsEnabled = false
+    scanInterval = 1
+    inplaceMode = 'hard'
+    jvmArgs = ['-Xmx1024M']
+    servletContainer = 'tomcat10'
+}

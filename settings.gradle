@@ -1,1 +1,4 @@
 rootProject.name = 'jstorybook'
+
+include 'jstorybook-core'
+include 'jstorybook-demo'
