@@ -13,7 +13,7 @@ A Storybook-like development environment for JSP components.
 ./gradlew createComponent -Pcomponent=MyComponent
 ```
 
-Visit `http://localhost:8080/jstorybook` to view the component library.
+Visit `http://localhost:8080` to view the component library.
 
 ## License
 
