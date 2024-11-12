@@ -23,7 +23,7 @@ public class StoryController {
     List<Story> stories = storyLoader.loadStories();
     logger.info("Found stories: {}", stories);
     model.addAttribute("stories", stories);
-    return "/WEB-INF/jstorybook/views/storybook";
+    return "/WEB-INF/jstorybook/views/jstorybook";
   }
 
   @GetMapping("/story/{storyName}")
