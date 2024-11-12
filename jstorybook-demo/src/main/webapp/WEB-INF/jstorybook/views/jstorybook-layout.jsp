@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JStorybook</title>
+    <title>JStorybook - ${title}</title>
     <base href="${pageContext.request.contextPath}/">
     <style>
         * {
@@ -19,7 +19,6 @@
             display: flex;
         }
 
-        /* Sidebar styles */
         .sidebar {
             width: 260px;
             height: 100vh;
@@ -65,18 +64,27 @@
             background-color: #e6e6e6;
         }
 
-        /* Main content area */
         .main-content {
             flex-grow: 1;
             padding: 20px;
             overflow-y: auto;
         }
 
-        .welcome-message {
-            max-width: 600px;
-            margin: 40px auto;
-            text-align: center;
-            color: #666;
+        /* Story Preview styles */
+        .story-preview {
+            padding: 20px;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .story-section {
+            margin-bottom: 30px;
+        }
+
+        .story-section h3 {
+            margin-bottom: 15px;
+            color: #333;
         }
     </style>
 </head>
@@ -99,12 +107,7 @@
 
     <!-- Main content -->
     <main class="main-content">
-        <c:if test="${empty selectedStory}">
-            <div class="welcome-message">
-                <h2>Welcome to JStorybook</h2>
-                <p>Select a component from the sidebar to view its stories.</p>
-            </div>
-        </c:if>
+        <jsp:include page="${storyPath}" />
     </main>
 </body>
 </html>

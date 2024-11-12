@@ -29,7 +29,10 @@ public class StoryController {
   @GetMapping("/story/{storyName}")
   public String viewStory(@PathVariable String storyName, Model model) {
     logger.info("Attempting to view story: {}", storyName);
-    // Update the path to look in WEB-INF/views/stories
-    return "/WEB-INF/views/stories/" + storyName;
+    List<Story> stories = storyLoader.loadStories();
+    model.addAttribute("stories", stories);
+    model.addAttribute("title", storyName);
+    model.addAttribute("storyPath", "/WEB-INF/views/stories/" + storyName + ".jsp");
+    return "/WEB-INF/jstorybook/views/jstorybook-layout";
   }
 }
