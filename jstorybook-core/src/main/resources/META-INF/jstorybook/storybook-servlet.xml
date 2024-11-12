@@ -16,11 +16,10 @@
 
   <!-- Static resources -->
   <mvc:resources mapping="/components/**" location="/components/"/>
-  <mvc:resources mapping="/stories/**" location="/WEB-INF/views/stories/"/>
 
-  <!-- View resolver -->
+  <!-- View resolver that matches absolute paths -->
   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-    <property name="prefix" value="/WEB-INF/views/"/>
+    <property name="prefix" value=""/>
     <property name="suffix" value=".jsp"/>
     <property name="order" value="1"/>
   </bean>

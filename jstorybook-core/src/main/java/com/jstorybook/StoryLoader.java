@@ -60,9 +60,4 @@ public class StoryLoader implements ServletContextAware {
 
     return stories;
   }
-
-  public List<Story> loadStories(String path) {
-    this.storiesPath = path;
-    return loadStories();
-  }
 }

@@ -23,17 +23,13 @@ public class StoryController {
     List<Story> stories = storyLoader.loadStories();
     logger.info("Found stories: {}", stories);
     model.addAttribute("stories", stories);
-    return "storybook";
+    return "/WEB-INF/jstorybook/views/storybook";
   }
 
   @GetMapping("/story/{storyName}")
   public String viewStory(@PathVariable String storyName, Model model) {
     logger.info("Attempting to view story: {}", storyName);
-    // If the story name already ends with Story, don't append it again
-    String viewName = storyName.endsWith("Story") ?
-            "stories/" + storyName :
-            "stories/" + storyName + "Story";
-    logger.info("Resolving to view: {}", viewName);
-    return viewName;
+    // Update the path to look in WEB-INF/views/stories
+    return "/WEB-INF/views/stories/" + storyName;
   }
 }
