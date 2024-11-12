@@ -52,7 +52,7 @@ public class StoryLoader implements ServletContextAware {
       String fileName = storyFile.getName();
       // Remove the .jsp extension
       String storyName = fileName.substring(0, fileName.length() - 4);
-      String storyUrl = contextPath + "/story/" + storyName;
+      String storyUrl = contextPath + "/" + storyName;
 
       logger.info("Found story: {} -> {}", fileName, storyUrl);
       stories.add(new Story(storyName, storyUrl));

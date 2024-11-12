@@ -26,7 +26,7 @@ public class StoryController {
     return "/WEB-INF/jstorybook/views/jstorybook";
   }
 
-  @GetMapping("/story/{storyName}")
+  @GetMapping("/{storyName}")
   public String viewStory(@PathVariable String storyName, Model model) {
     logger.info("Attempting to view story: {}", storyName);
     List<Story> stories = storyLoader.loadStories();

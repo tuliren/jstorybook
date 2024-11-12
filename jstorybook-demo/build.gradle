@@ -16,7 +16,7 @@ dependencies {
 }
 
 gretty {
-    contextPath = '/jstorybook'
+    contextPath = '/'
     httpsEnabled = false
     scanInterval = 1
     inplaceMode = 'hard'
